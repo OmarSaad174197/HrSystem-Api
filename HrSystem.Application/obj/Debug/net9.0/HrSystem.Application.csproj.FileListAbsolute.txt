@@ -1,0 +1,15 @@
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\bin\Debug\net9.0\HrSystem.Application.deps.json
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\bin\Debug\net9.0\HrSystem.Application.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\bin\Debug\net9.0\HrSystem.Application.pdb
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\bin\Debug\net9.0\HrSystem.Domain.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\bin\Debug\net9.0\HrSystem.Domain.pdb
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.csproj.AssemblyReference.cache
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.AssemblyInfoInputs.cache
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.AssemblyInfo.cs
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.csproj.CoreCompileInputs.cache
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.43E51C4E.Up2Date
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\refint\HrSystem.Application.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\HrSystem.Application.pdb
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Application\obj\Debug\net9.0\ref\HrSystem.Application.dll

@@ -1,0 +1,12 @@
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\bin\Debug\net9.0\HrSystem.Domain.deps.json
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\bin\Debug\net9.0\HrSystem.Domain.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\bin\Debug\net9.0\HrSystem.Domain.pdb
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.AssemblyInfoInputs.cache
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.AssemblyInfo.cs
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.csproj.CoreCompileInputs.cache
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\refint\HrSystem.Domain.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.pdb
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\ref\HrSystem.Domain.dll
+D:\My-tech-projects\Back-End\HrSystem\HrSystem\HrSystem.Domain\obj\Debug\net9.0\HrSystem.Domain.csproj.AssemblyReference.cache
