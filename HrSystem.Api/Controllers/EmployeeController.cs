@@ -32,21 +32,21 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<EmployeeDto>> Create(CreateEmployeeDto dto)
+    public async Task<ActionResult<EmployeeDto>> CreateEmployee(CreateEmployeeDto dto)
     {
         var employee = await _employeeService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.Id }, employee);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, UpdateEmployeeDto dto)
+    public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployeeDto dto)
     {
         await _employeeService.UpdateAsync(id, dto);
         return NoContent();
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteEmployee(int id)
     {
         await _employeeService.DeleteAsync(id);
         return NoContent();

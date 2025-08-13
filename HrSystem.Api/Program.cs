@@ -76,7 +76,7 @@ builder.Services.AddScoped<IValidator<LoginDto>, LoginValidator>();
 // Swagger + JWT Support (.NET 9 style)
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "FinTech BlogPost API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "HrVacationsSystem API", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,

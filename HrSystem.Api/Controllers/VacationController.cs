@@ -27,6 +27,6 @@ public class VacationController : ControllerBase
                    ?? throw new UnauthorizedAccessException("Role not found.");
 
         var vacation = await _vacationService.AddSingleAsync(dto, userId, role);
-        return CreatedAtAction(nameof(HrController.GetById), "Hr", new { id = vacation.Id }, vacation);
+        return CreatedAtAction(nameof(HrController.GetVacationById), "Hr", new { id = vacation.Id }, vacation);
     }
 }

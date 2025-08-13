@@ -41,7 +41,7 @@ namespace HRSystem.Application.Services
             var user = new AppUser
             {
                 UserName = dto.Username,
-                Email = dto.Email // حتى لو AppUser فاضي ده بيساعد بعدين
+                Email = dto.Email 
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
