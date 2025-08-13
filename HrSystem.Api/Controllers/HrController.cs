@@ -21,14 +21,14 @@ public class HrController : ControllerBase
     public async Task<ActionResult<VacationDto>> AddSingleVacation(CreateVacationDto dto)
     {
         var vacation = await _vacationService.AddSingleAsync(dto, "admin", "HR");
-        return CreatedAtAction(nameof(GetById), new { id = vacation.Id }, vacation);
+        return CreatedAtAction(nameof(GetVacationById), new { id = vacation.Id }, vacation);
     }
 
     [HttpPost("Add group of vacations")]
     public async Task<ActionResult<List<VacationDto>>> AddBatchOfVacations(CreateVacationsBatchDto dto)
     {
-        var created = await _vacationService.AddBatchAsync(dto);
-        return Ok(created);
+        var vacation = await _vacationService.AddBatchAsync(dto);
+        return Ok(vacation);
     }
 
     [HttpGet]
