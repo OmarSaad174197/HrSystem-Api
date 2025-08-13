@@ -41,7 +41,7 @@ namespace HRSystem.Application.Services
             var user = new AppUser
             {
                 UserName = dto.Username,
-                Email = dto.Email 
+                Email = dto.Email
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
@@ -99,7 +99,7 @@ namespace HRSystem.Application.Services
                 Role = role
             };
         }
-
+        // Generate the jwt token
         private string GenerateJwtToken(AppUser user, string role)
         {
             var claims = new List<Claim>

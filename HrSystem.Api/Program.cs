@@ -73,7 +73,7 @@ builder.Services.AddScoped<IValidator<CreateVacationDto>, CreateVacationValidato
 builder.Services.AddScoped<IValidator<RegisterDto>, RegisterValidator>();
 builder.Services.AddScoped<IValidator<LoginDto>, LoginValidator>();
 
-// Swagger + JWT Support (.NET 9 style)
+// Swagger config
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "HrVacationsSystem API", Version = "v1" });

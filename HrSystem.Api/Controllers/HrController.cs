@@ -27,8 +27,8 @@ public class HrController : ControllerBase
     [HttpPost("AddGroupOfVacations")]
     public async Task<ActionResult<List<VacationDto>>> AddBatchOfVacations(CreateVacationsBatchDto dto)
     {
-        var vacation = await _vacationService.AddBatchAsync(dto);
-        return Ok(vacation);
+        var created = await _vacationService.AddBatchAsync(dto);
+        return Ok(created);
     }
 
     [HttpGet]
@@ -46,7 +46,7 @@ public class HrController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteVacation(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         await _vacationService.DeleteAsync(id);
         return NoContent();
