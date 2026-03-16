@@ -1,3 +1,4 @@
+using FluentValidation;
 using HrSystem.Application.DTOs.VacationDtos;
 using HrSystem.Domain.Entities;
 using HrSystem.Domain.Interfaces;
@@ -6,12 +7,27 @@ using Microsoft.Extensions.Logging;
 
 namespace HRSystem.Application.Services
 {
-    public class VacationService(IUnitOfWork unitOfWork, ILogger<VacationService> logger) : IVacationService
+    public class VacationService(IUnitOfWork unitOfWork, IValidator<CreateVacationDto> createValidator, ILogger<VacationService> logger) : IVacationService
     {
         public async Task<VacationDto> AddSingleAsync(CreateVacationDto dto, string currentUserId, string currentUserRole)
         {
             if (currentUserRole != "HR" && currentUserRole != "Employee")
                 throw new UnauthorizedAccessException("You do not have permission to add a vacation.");
+
+            createValidator.ValidateAndThrow(dto);
+
+            if (!await unitOfWork.Employees.ExistsAsync(e => e.Id == dto.EmployeeId))
+                throw new KeyNotFoundException($"Employee with ID {dto.EmployeeId} not found.");
+
+            if (currentUserRole == "Employee")
+            {
+                var employee = await unitOfWork.Employees.FirstOrDefaultAsync(e => e.UserId == currentUserId);
+                if (employee == null)
+                    throw new UnauthorizedAccessException("Employee record not found for current user.");
+
+                if (employee.Id != dto.EmployeeId)
+                    throw new UnauthorizedAccessException("Employees can only create vacations for themselves.");
+            }
 
             var vacation = new Vacation
             {
@@ -32,6 +48,13 @@ namespace HRSystem.Application.Services
         {
             if (dto.Vacations == null || !dto.Vacations.Any())
                 throw new ArgumentException("No vacations provided.");
+
+            foreach (var vacation in dto.Vacations)
+            {
+                createValidator.ValidateAndThrow(vacation);
+                if (!await unitOfWork.Employees.ExistsAsync(e => e.Id == vacation.EmployeeId))
+                    throw new KeyNotFoundException($"Employee with ID {vacation.EmployeeId} not found.");
+            }
 
             var vacations = dto.Vacations.Select(v => new Vacation
             {

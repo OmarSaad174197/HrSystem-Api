@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace HrSystem.Infrastructure.Data;
+namespace HrSystem.Domain.Entities;
 
 public class AppUser : IdentityUser
 {
-    
 }

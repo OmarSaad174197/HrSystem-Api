@@ -8,6 +8,7 @@ public class RegisterValidator : AbstractValidator<RegisterDto>
     public RegisterValidator()
     {
         RuleFor(x => x.Username).NotEmpty().MinimumLength(3);
+        RuleFor(x => x.Email).NotEmpty().EmailAddress();
         RuleFor(x => x.Password).NotEmpty().MinimumLength(6);
         RuleFor(x => x.Name).NotEmpty().When(x => x.Role == "Employee").WithMessage("Name required for Employee.");
         RuleFor(x => x.DepartmentId).GreaterThan(0).When(x => x.Role == "Employee").WithMessage("DepartmentId required for Employee.");

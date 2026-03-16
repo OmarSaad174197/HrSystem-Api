@@ -7,6 +7,6 @@ namespace HrSystem.Domain.Entities
         public DateTime Date { get; set; }
         // Nav Props
         public int EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee { get; set; } = null!;
     }
 }

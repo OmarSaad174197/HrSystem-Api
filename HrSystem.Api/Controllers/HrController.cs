@@ -2,6 +2,7 @@ using HrSystem.Application.DTOs.VacationDtos;
 using HRSystem.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HRSystem.Api.Controllers;
 
@@ -20,7 +21,12 @@ public class HrController : ControllerBase
     [HttpPost("AddOneVacation")]
     public async Task<ActionResult<VacationDto>> AddSingleVacation(CreateVacationDto dto)
     {
-        var vacation = await _vacationService.AddSingleAsync(dto, "admin", "HR");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? throw new UnauthorizedAccessException("User ID not found.");
+        var role = User.FindFirstValue(ClaimTypes.Role)
+                   ?? throw new UnauthorizedAccessException("Role not found.");
+
+        var vacation = await _vacationService.AddSingleAsync(dto, userId, role);
         return CreatedAtAction(nameof(GetVacationById), new { id = vacation.Id }, vacation);
     }
 

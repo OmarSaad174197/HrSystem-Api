@@ -11,6 +11,7 @@ namespace HrSystem.Infrastructure.Configurations
             builder.Property(d => d.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+            builder.HasIndex(d => d.Name).IsUnique();
         }
     }
 }

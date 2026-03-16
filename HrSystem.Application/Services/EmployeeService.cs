@@ -28,6 +28,9 @@ namespace HRSystem.Application.Services
             if (await unitOfWork.Departments.GetByIdAsync(dto.DepartmentId) == null)
                 throw new KeyNotFoundException($"Department with ID {dto.DepartmentId} not found.");
 
+            if (await unitOfWork.Employees.ExistsAsync(e => e.UserId == dto.UserId))
+                throw new InvalidOperationException("An employee is already linked to this user.");
+
             var employee = new Employee { Name = dto.Name, DepartmentId = dto.DepartmentId, UserId = dto.UserId };
             await unitOfWork.Employees.AddAsync(employee);
             await unitOfWork.SaveAsync();
@@ -67,8 +70,7 @@ namespace HRSystem.Application.Services
 
         public async Task<int?> GetEmployeeIdByUserIdAsync(string userId)
         {
-            var employees = await unitOfWork.Employees.GetAllAsync();
-            var employee = employees.FirstOrDefault(e => e.UserId == userId);
+            var employee = await unitOfWork.Employees.FirstOrDefaultAsync(e => e.UserId == userId);
             return employee?.Id;
         }
     }

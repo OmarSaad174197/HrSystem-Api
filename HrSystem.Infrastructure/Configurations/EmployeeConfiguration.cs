@@ -10,6 +10,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Name).IsRequired().HasMaxLength(100);
         builder.Property(e => e.UserId).IsRequired().HasMaxLength(450); // Matches IdentityUser.Id
+        builder.HasIndex(e => e.UserId).IsUnique();
         builder.HasOne(e => e.Department).WithMany(d => d.Employees).HasForeignKey(e => e.DepartmentId).OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -11,7 +11,9 @@ using HrSystem.Application.DTOs.VacationDtos;
 using HRSystem.Application.Interfaces;
 using HRSystem.Application.Services;
 using HRSystem.Application.Validators;
+using HrSystem.Api.Middleware;
 using HrSystem.Domain.Interfaces;
+using HrSystem.Domain.Entities;
 using HrSystem.Infrastructure.Data;
 using HRSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +41,29 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 
 
 // JWT Authentication
-builder.Services.AddAuthentication()
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey))
+    throw new InvalidOperationException("JWT Key is missing or empty.");
+
+var issuerRaw = builder.Configuration["Jwt:Issuer"];
+var audienceRaw = builder.Configuration["Jwt:Audience"];
+
+var issuers = issuerRaw?
+    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+var audiences = audienceRaw?
+    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+if (issuers is not { Length: > 0 })
+    throw new InvalidOperationException("Jwt:Issuer is missing or empty.");
+
+if (audiences is not { Length: > 0 })
+    throw new InvalidOperationException("Jwt:Audience is missing or empty.");
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -48,11 +72,19 @@ builder.Services.AddAuthentication()
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            ClockSkew = TimeSpan.Zero,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
+
+        if (issuers.Length == 1)
+            options.TokenValidationParameters.ValidIssuer = issuers[0];
+        else
+            options.TokenValidationParameters.ValidIssuers = issuers;
+
+        if (audiences.Length == 1)
+            options.TokenValidationParameters.ValidAudience = audiences[0];
+        else
+            options.TokenValidationParameters.ValidAudiences = audiences;
     });
 
 builder.Services.AddAuthorization();
@@ -103,6 +135,8 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Swagger Middleware
 if (app.Environment.IsDevelopment())

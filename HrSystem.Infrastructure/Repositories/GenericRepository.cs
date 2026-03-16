@@ -1,6 +1,9 @@
+using System.Linq.Expressions;
 using HrSystem.Domain.Interfaces;
 using HrSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+
+namespace HRSystem.Infrastructure.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
@@ -21,6 +24,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<T?> GetByIdAsync(int id)
     {
         return await _dbSet.FindAsync(id);
+    }
+
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
+    }
+
+    public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet.AsNoTracking().AnyAsync(predicate);
     }
 
     public async Task AddAsync(T entity)

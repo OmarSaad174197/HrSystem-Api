@@ -25,6 +25,9 @@ namespace HRSystem.Application.Services
         {
             createValidator.ValidateAndThrow(dto);
 
+            if (await unitOfWork.Departments.ExistsAsync(d => d.Name == dto.Name))
+                throw new InvalidOperationException("Department name already exists.");
+
             var department = new Department { Name = dto.Name };
             await unitOfWork.Departments.AddAsync(department);
             await unitOfWork.SaveAsync();
@@ -39,6 +42,9 @@ namespace HRSystem.Application.Services
 
             var department = await unitOfWork.Departments.GetByIdAsync(id)
                               ?? throw new KeyNotFoundException($"Department with ID {id} not found.");
+
+            if (await unitOfWork.Departments.ExistsAsync(d => d.Name == dto.Name && d.Id != id))
+                throw new InvalidOperationException("Department name already exists.");
 
             department.Name = dto.Name;
             unitOfWork.Departments.Update(department);

@@ -5,8 +5,7 @@ using FluentValidation;
 using HrSystem.Application.DTOs;
 using HrSystem.Application.DTOs.EmployeeDtos;
 using HRSystem.Application.Interfaces;
-using HrSystem.Domain.Interfaces;
-using HrSystem.Infrastructure.Data;
+using HrSystem.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -18,7 +17,6 @@ namespace HRSystem.Application.Services
         UserManager<AppUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration config,
-        IUnitOfWork unitOfWork,
         IEmployeeService employeeService,
         IValidator<RegisterDto> registerValidator,
         IValidator<LoginDto> loginValidator,
@@ -32,6 +30,10 @@ namespace HRSystem.Application.Services
             // Check username existence
             if (await userManager.FindByNameAsync(dto.Username) != null)
                 throw new InvalidOperationException("Username already exists.");
+
+            // Check email existence
+            if (await userManager.FindByEmailAsync(dto.Email) != null)
+                throw new InvalidOperationException("Email already exists.");
 
             // Validate role
             if (dto.Role != "HR" && dto.Role != "Employee")
@@ -102,6 +104,16 @@ namespace HRSystem.Application.Services
         // Generate the jwt token
         private string GenerateJwtToken(AppUser user, string role)
         {
+            var issuer = config["Jwt:Issuer"]?
+                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .FirstOrDefault()
+                ?? throw new InvalidOperationException("JWT Issuer not configured.");
+
+            var audience = config["Jwt:Audience"]?
+                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .FirstOrDefault()
+                ?? throw new InvalidOperationException("JWT Audience not configured.");
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -117,8 +129,8 @@ namespace HRSystem.Application.Services
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: config["Jwt:Issuer"],
-                audience: config["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
