@@ -1,6 +1,15 @@
 # Build artifacts
 bin/
 obj/
+*.dll
+*.pdb
+*.exe
+*.cache
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.assets.cache
+*.AssemblyReference.cache
 
 # Visual Studio / VS Code
 .vs/
@@ -20,3 +29,5 @@ obj/
 
 # Publish profiles / secrets
 *.publishsettings
+Properties/PublishProfiles/
+*.pubxml
