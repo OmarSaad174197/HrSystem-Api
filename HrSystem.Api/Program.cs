@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var jwtSecret = builder.Configuration["Jwt:Key"];
 // Controllers & Endpoints
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
